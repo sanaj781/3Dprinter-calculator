@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+/* numeric input fields without arrows
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.left-nav {
+  height: 100vh;
+  background-color: #17163b;
+  border-right: 1px solid white;
+}
+.content-section {
+  height: 100vh;
+  background-color: #262250;
+  /* background-color: #212529; */
+}
+#calculator {
+  border: 1px solid white;
+}
+#drabpol-logo {
+  width: 100%;
+}
+#fortus-logo,
+#scaner-logo {
+  width: 20%;
+}
+#blue {
+  color: #3399cc;
+}
+#white {
+  color: white;
+}
