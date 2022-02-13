@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/3Dprinter-calculator/static/css/main.147a3c10.css",
+    "main.js": "/3Dprinter-calculator/static/js/main.cfc0460e.js",
+    "static/js/787.9e38c7a0.chunk.js": "/3Dprinter-calculator/static/js/787.9e38c7a0.chunk.js",
+    "static/media/Fort450F.png": "/3Dprinter-calculator/static/media/Fort450F.4e5a7a27a94c804128e7.png",
+    "static/media/einscan-logo.png": "/3Dprinter-calculator/static/media/einscan-logo.653c106d34b7a60b06cc.png",
+    "static/media/DRABPOL-white2.webp": "/3Dprinter-calculator/static/media/DRABPOL-white2.b46e7a87b3dfaaba8c57.webp",
+    "index.html": "/3Dprinter-calculator/index.html",
+    "main.147a3c10.css.map": "/3Dprinter-calculator/static/css/main.147a3c10.css.map",
+    "main.cfc0460e.js.map": "/3Dprinter-calculator/static/js/main.cfc0460e.js.map",
+    "787.9e38c7a0.chunk.js.map": "/3Dprinter-calculator/static/js/787.9e38c7a0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.147a3c10.css",
+    "static/js/main.cfc0460e.js"
+  ]
+}
