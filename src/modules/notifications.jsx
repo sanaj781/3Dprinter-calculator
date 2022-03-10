@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-const API_PATH = "http://localhost:8888/login/APIs/readNotifications.php";
+import { API_PATH_READ_NOTIFICATIONS } from "../APIs";
+
 const Notifications = () => {
   //   const { user } = props;
   const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    axios.get(API_PATH).then((res) => {
-      const userOrders = [];
+  const [errors, setErrors] = useState();
 
-      for (const order of res.data.row) {
-        userOrders.push(order);
-      }
-      setOrders(userOrders);
-    });
+  useEffect(() => {
+    axios
+      .get(API_PATH_READ_NOTIFICATIONS)
+      .then((res) => {
+        const userOrders = [];
+
+        for (const order of res.data.row) {
+          userOrders.push(order);
+        }
+        setOrders(userOrders);
+      })
+      .catch((error) => setErrors(error.message));
   }, []);
   return (
     <React.Fragment>

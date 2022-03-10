@@ -9,6 +9,7 @@ const Login = (props) => {
     onEmailChange,
     onPasswordChange,
     onSubmit,
+    onLogout,
   } = props;
   if (!user) {
     return (
@@ -56,7 +57,15 @@ const Login = (props) => {
       </React.Fragment>
     );
   } else {
-    return <Layout user={user} />;
+    return (
+      <Layout
+        username={username}
+        password={password}
+        user={user}
+        onSubmit={onSubmit}
+        onLogout={onLogout}
+      />
+    );
   }
 };
 

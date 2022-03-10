@@ -1,12 +1,9 @@
-
-<?php
-require 'db.php';
-$orders = [];
-header('Access-Control-Allow-Origin: *');
+<?php header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
 header("Content-Type: application/json; charset=UTF-8");
-
+require 'db.php';
+$orders = [];
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 $sql = "SELECT * FROM calculation_requests";
 $result = mysqli_query($conn, $sql);
@@ -18,6 +15,3 @@ if ($resultCheck > 0) {
     }
 }
 echo json_encode(["row" => $orders,]);
-
-
-?>

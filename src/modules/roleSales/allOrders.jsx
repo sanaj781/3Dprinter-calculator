@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const API_PATH = "http://localhost:8888/login/APIs/allOrders.php";
+import { API_PATH_ALL_ORDERS } from "../../APIs";
 
 const Orders = (props) => {
   const { user } = props;
   const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    axios.get(API_PATH).then((res) => {
-      const userOrders = [];
-      if (user.role === "admin") setOrders(res.data.row);
-      else {
-        for (const order of res.data.row) {
-          if (order.ordering_person === user.username) userOrders.push(order);
-        }
-        setOrders(userOrders);
-      }
-    });
-  }, []);
+  const [errors, setErrors] = useState();
 
+  useEffect(() => {
+    axios
+      .get(API_PATH_ALL_ORDERS)
+      .then((res) => {
+        const userOrders = [];
+        if (user.role === "admin") setOrders(res.data.row);
+        else {
+          for (const order of res.data.row) {
+            if (order.ordering_person === user.username) userOrders.push(order);
+          }
+          setOrders(userOrders);
+        }
+      })
+      .catch((error) => setErrors(error.message));
+  }, []);
+  if (errors) console.log(errors);
   return (
     <React.Fragment>
       <h3 className="text-center">Historia Zlecen</h3>

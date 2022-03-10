@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import drabpolLogo from "./images/DRABPOL-white2.webp";
 import drabpolLogoBlack from "./images/Drabpol-1600x640.jpeg";
-import Layout from "./modules/layout";
 import PrinterNavBar from "./modules/printerNavbar";
 import SkanerNavBar from "./modules/skanerNavbar";
 import UserPanel from "./modules/userPanel";
@@ -13,11 +12,7 @@ import Login from "./modules/loginPage";
 import Orders from "./modules/roleSales/allOrders";
 import Storage from "./modules/roleSales/storage";
 import Notifications from "./modules/notifications";
-const API_PATH_AUTH = "http://localhost:8888/login/APIs/userAuth.php";
-const API_PATH_NOTIFICATIONS =
-  "http://localhost:8888/login/APIs/notifications.php";
-
-// const API_PATH = "./APIs/userLogin.php";
+import { API_PATH_AUTH, API_PATH_NOTIFICATIONS } from "./APIs.js";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -27,14 +22,17 @@ const App = () => {
   const [errors, setErrors] = useState();
 
   useEffect(() => {
+    axios
+      .get(API_PATH_NOTIFICATIONS)
+      .then((res) => {
+        setNotifications(res.data.notifications);
+      })
+      .catch((error) => setErrors(error.message));
     const loggedInUser = JSON.parse(localStorage.getItem("user"));
     if (loggedInUser) {
       const foundUser = loggedInUser;
       setUser(foundUser);
       //Check if there are new notifications if user found
-      axios.get(API_PATH_NOTIFICATIONS).then((res) => {
-        setNotifications(res.data.notifications);
-      });
     }
   }, []);
   const handleLogout = () => {
@@ -60,11 +58,12 @@ const App = () => {
         else {
           localStorage.setItem("user", JSON.stringify(result.data));
           setUser(result.data);
-          window.location = "/main";
         }
       })
       .catch((error) => setErrors(error.message));
   };
+  if (errors) console.log(errors);
+
   if (!user) {
     return (
       <div className="container-fluid  align-content-between">
@@ -134,20 +133,8 @@ const App = () => {
                         onEmailChange={(e) => setUsername(e.target.value)}
                         onPasswordChange={(e) => setPassword(e.target.value)}
                         onSubmit={onSubmit}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/main"
-                    element={
-                      <Layout
-                        user={user}
-                        password={password}
-                        username={username}
-                        onEmailChange={(e) => setUsername(e.target.value)}
-                        onPasswordChange={(e) => setPassword(e.target.value)}
-                        onSubmit={onSubmit}
                         onLogout={handleLogout}
+                        notifications={notifications}
                       />
                     }
                   />

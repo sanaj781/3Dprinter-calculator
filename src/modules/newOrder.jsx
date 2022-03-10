@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-const API_PATH = "http://localhost:8888/login/APIs/newOrder.php";
-// const API_PATH = "./APIs/newOrder.php";
+import { API_PATH_NEW_ORDER } from "../APIs";
 
 class NewOrder extends Component {
   state = {
@@ -19,7 +18,7 @@ class NewOrder extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: API_PATH,
+      url: API_PATH_NEW_ORDER,
       headers: {
         "content-type": "application/json",
       },
