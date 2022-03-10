@@ -22,30 +22,102 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
-.left-nav {
+.container-fluid {
+  max-width: 2500px;
   height: 100vh;
-  background-color: #17163b;
-  border-right: 1px solid white;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.left-nav {
+  background-color: #17163b !important;
+
+  border-right: 0.5px solid white;
 }
 .content-section {
-  height: 100vh;
-  background-color: #262250;
-  /* background-color: #212529; */
 }
-#calculator {
-  border: 1px solid white;
-}
+
 #drabpol-logo {
   width: 100%;
 }
 #fortus-logo,
 #scaner-logo {
-  width: 20%;
+  height: 50px;
 }
 #blue {
   color: #3399cc;
 }
 #white {
   color: white;
+}
+.footer {
+  text-align: center;
+  border-top: 0.5px solid white;
+  color: white;
+  padding: 20px 0;
+  background-color: #17163b !important;
+}
+
+label {
+  color: black;
+}
+h3 {
+  color: black;
+  text-align: center;
+}
+.login {
+  border: 0.5px solid white;
+  padding: 10px;
+  width: 600px !important;
+}
+.submit {
+  margin-left: auto !important;
+  width: 100%;
+}
+
+p {
+  color: white;
+  margin: 0 !important;
+  padding-right: 2em;
+}
+.userPanel {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border: 0.5px solid white;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 50px;
+  color: white;
+  padding: 10px 50px;
+  background-color: #25214d;
+  margin: 5px 0;
+}
+.userPanel a {
+  color: white;
+}
+.userPanel a:hover {
+  color: #3399cc;
+}
+a {
+  text-decoration: none !important;
+}
+
+.bi-bell-fill {
+  padding-right: 2em;
+  font-style: normal;
+}
+tr {
+  vertical-align: middle;
+}
+.input-group-text {
+  background-color: #6c757d !important;
+  color: white !important;
+  width: 80px;
+  justify-content: center;
+}
+.estimates {
+  border: 0.5px solid #3399cc !important;
+}
+.estimates:focus {
+  outline: 1px solid #6c757d;
 }

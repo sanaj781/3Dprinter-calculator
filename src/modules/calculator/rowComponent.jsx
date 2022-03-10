@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Dropdown from "./dropdown";
 import InputField from "./inputfield";
 const RowComponent = (props) => {

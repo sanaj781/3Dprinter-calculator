@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 const InputField = (props) => {
   const { onEstimatesChange, units } = props;
   return (
     <React.Fragment>
-      <div className="input-group mb-3">
+      <div className="input-group">
         <input
           onChange={onEstimatesChange}
           id="input-estimates"
@@ -12,7 +12,7 @@ const InputField = (props) => {
           className="col-3 estimates"
           placeholder="0"
         />
-        <span className="input-group-text" id="basic-addon1">
+        <span className="ms-1 input-group-text text-center" id="basic-addon1">
           {units}
         </span>
       </div>

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import RowComponent from "./rowComponent";
 import Thead from "./thead";
 import { getMaterials, getSupports } from "./arrayOfMaterials";
@@ -30,7 +30,7 @@ class Calculator extends React.Component {
         dropdown: 0,
         estimates: 0,
         rate: 38,
-        units: "godz.",
+        units: "godz",
       },
 
       {
@@ -38,7 +38,7 @@ class Calculator extends React.Component {
         dropdown: 0,
         estimates: 0,
         rate: 1.45,
-        units: "godz.",
+        units: "godz",
       },
       {
         name: "Kalibracja",
@@ -89,7 +89,8 @@ class Calculator extends React.Component {
     }
     return (
       <React.Fragment>
-        <table id="calculator" className="table table-dark table-hover">
+        <h3>Kalkulator</h3>
+        <table id="calculator" className="table table-striped table-hover">
           <Thead />
           <tbody>
             {this.state.rows.map((m) => (
