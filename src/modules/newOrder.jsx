@@ -82,7 +82,11 @@ class NewOrder extends Component {
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">Nazwa projektu</label>
             <input
-              onChange={(e) => this.setState({ projectName: e.target.value })}
+              onChange={(e) =>
+                this.setState({
+                  post: { ...this.state.post, projectName: e.target.value },
+                })
+              }
               name="title"
               type="text"
               className="form-control"
@@ -104,7 +108,9 @@ class NewOrder extends Component {
             <label htmlFor="exampleFormControlSelect1">Rodzaj Materialu</label>
             <select
               onChange={(e) =>
-                this.setState({ choosenMaterial: e.target.value })
+                this.setState({
+                  post: { ...this.state.post, choosenMaterial: e.target.value },
+                })
               }
               className="form-control"
               id="exampleFormControlSelect1"
@@ -121,7 +127,11 @@ class NewOrder extends Component {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Color</label>
             <select
-              onChange={(e) => this.setState({ materialColor: e.target.value })}
+              onChange={(e) =>
+                this.setState({
+                  post: { ...this.state.post, materialColor: e.target.value },
+                })
+              }
               className="form-control"
               id="exampleFormControlSelect1"
               name="color"
@@ -140,7 +150,11 @@ class NewOrder extends Component {
               Krotki opis projektu
             </label>
             <textarea
-              onChange={(e) => this.setState({ description: e.target.value })}
+              onChange={(e) =>
+                this.setState({
+                  post: { ...this.state.post, description: e.target.value },
+                })
+              }
               name="description"
               className="form-control"
               id="exampleFormControlTextarea1"

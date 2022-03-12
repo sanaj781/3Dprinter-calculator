@@ -6,3 +6,4 @@ export const apiURL = "http://localhost:8888/login/APIs",
   API_PATH_ALL_ORDERS = apiURL + "/allOrders.php",
   API_PATH_NEW_ORDER = apiURL + "/newOrder.php",
   API_PATH_CHECK_AUTH = apiURL + "/checkAuth.php";
+// const apiURL = "http://test.web-create.pl/back-end",
