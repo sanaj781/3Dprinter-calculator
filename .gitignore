@@ -11,6 +11,7 @@
 # production
 /build
 src/back-end/db.php
+src/back-end/token.php
 # misc
 .DS_Store
 .env.local

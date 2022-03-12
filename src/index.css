@@ -34,6 +34,9 @@ input[type="number"] {
 
   border-right: 0.5px solid white;
 }
+.printer-nav {
+  border-bottom: 0.5px solid white;
+}
 .content-section {
 }
 
@@ -120,4 +123,24 @@ tr {
 }
 .estimates:focus {
   outline: 1px solid #6c757d;
+}
+.modal {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  padding: 30px 50px;
+  align-items: center;
+  width: 50% !important;
+  color: black;
+  justify-content: space-between;
+  border-bottom-right-radius: 50px !important;
+  border-top-left-radius: 50px !important;
+}
+.modal-content button {
+  margin-top: 30px;
+  width: 50%;
 }

@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_PATH_READ_NOTIFICATIONS } from "../APIs";
+import {
+  API_PATH_READ_NOTIFICATIONS_ADMIN,
+  API_PATH_READ_NOTIFICATIONS_SALES,
+} from "../APIs";
 
-const Notifications = () => {
+const Notifications = (props) => {
   //   const { user } = props;
   const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState();
+  const { user } = props;
 
   useEffect(() => {
     axios
-      .get(API_PATH_READ_NOTIFICATIONS)
+      .get(
+        user.role === "admin"
+          ? API_PATH_READ_NOTIFICATIONS_ADMIN
+          : API_PATH_READ_NOTIFICATIONS_SALES
+      )
       .then((res) => {
-        const userOrders = [];
-
-        for (const order of res.data.row) {
-          userOrders.push(order);
-        }
-        setOrders(userOrders);
+        setOrders(res.data.row);
       })
       .catch((error) => setErrors(error.message));
   }, []);
@@ -34,7 +37,7 @@ const Notifications = () => {
             <th scope="col">Color</th>
             <th scope="col">Opis</th>
             <th scope="col">Status</th>
-            <th scope="col">Wycena</th>
+            {user.role === "admin" && <th scope="col">Wycena</th>}
           </tr>
         </thead>
         <tbody>
@@ -49,7 +52,9 @@ const Notifications = () => {
               <td>{order.project_description}</td>
               <td>{order.status}</td>
               <td>
-                <button className="btn btn-success">Wyceń</button>
+                {user.role === "admin" && (
+                  <button className="btn btn-success">Wyceń</button>
+                )}
               </td>
             </tr>
           ))}

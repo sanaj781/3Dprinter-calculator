@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import drabpolLogo from "./images/DRABPOL-white2.webp";
 import drabpolLogoBlack from "./images/Drabpol-1600x640.jpeg";
 import PrinterNavBar from "./modules/printerNavbar";
@@ -22,25 +23,25 @@ const App = () => {
   const [errors, setErrors] = useState();
 
   useEffect(() => {
+    try {
+      const jwt = localStorage.getItem("jwt");
+      const decoded = jwtDecode(jwt);
+      setUser({ username: decoded.data.username, role: decoded.data.role });
+    } catch (ex) {
+      return null;
+    }
     axios
       .get(API_PATH_NOTIFICATIONS)
       .then((res) => {
         setNotifications(res.data.notifications);
       })
       .catch((error) => setErrors(error.message));
-    const loggedInUser = JSON.parse(localStorage.getItem("user"));
-    if (loggedInUser) {
-      const foundUser = loggedInUser;
-      setUser(foundUser);
-      //Check if there are new notifications if user found
-    }
   }, []);
   const handleLogout = () => {
     setUser();
     setUsername("");
     setPassword("");
     localStorage.clear();
-    window.location = "/";
   };
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -56,8 +57,10 @@ const App = () => {
         if (JSON.stringify(result.data) === JSON.stringify({ error: 1 }))
           console.log("Nieprawidlowe haslo lub login");
         else {
-          localStorage.setItem("user", JSON.stringify(result.data));
-          setUser(result.data);
+          localStorage.setItem("jwt", result.data.jwt);
+          const jwt = localStorage.getItem("jwt");
+          const decoded = jwtDecode(jwt);
+          setUser({ username: decoded.data.username, role: decoded.data.role });
         }
       })
       .catch((error) => setErrors(error.message));
@@ -143,7 +146,10 @@ const App = () => {
 
                   <Route path="/storage" element={<Storage />} />
                   <Route path="/calculator" element={<Calculator />} />
-                  <Route path="/notifications" element={<Notifications />} />
+                  <Route
+                    path="/notifications"
+                    element={<Notifications user={user} />}
+                  />
                 </Routes>
               </div>
             </div>

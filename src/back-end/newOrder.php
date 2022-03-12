@@ -1,7 +1,9 @@
 <?php
-require 'userAuth.php';
-if ($successAuth) {
-    unset($role);
+include 'checkAuth.php';
+if ($auth === 1) {
+    include 'db.php';
+    $rest_json = file_get_contents("php://input");
+    $_POST = json_decode($rest_json, true);
     $query = "INSERT INTO calculation_requests (project_title, ordering_person, project_file, material, color, project_description, status)
 VALUES(
 '" . $_POST['projectName'] . "',
@@ -16,4 +18,4 @@ VALUES(
     if ($result) {
         echo json_encode(["sent" => 1,]);
     } else echo json_encode(["sent" => 0,]);
-} else echo 'you are not authorized !';
+}
