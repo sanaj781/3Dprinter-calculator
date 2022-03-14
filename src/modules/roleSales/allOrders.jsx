@@ -6,7 +6,7 @@ const Orders = (props) => {
   const { user } = props;
   const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState();
-
+  const [loadClass, setLoadClass] = useState("spinner-border text-primary");
   useEffect(() => {
     axios
       .get(API_PATH_ALL_ORDERS)
@@ -18,6 +18,7 @@ const Orders = (props) => {
             if (order.ordering_person === user.username) userOrders.push(order);
           }
           setOrders(userOrders);
+          setLoadClass("spinner-border text-primary d-none");
         }
       })
       .catch((error) => setErrors(error.message));
@@ -39,6 +40,10 @@ const Orders = (props) => {
             <th scope="col">Status</th>
           </tr>
         </thead>
+
+        <div className={loadClass} role="status">
+          <span class="sr-only"></span>
+        </div>
         <tbody>
           {orders.map((order) => (
             <tr key={order.id}>

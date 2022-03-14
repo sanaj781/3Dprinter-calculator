@@ -10,6 +10,7 @@ const Notifications = (props) => {
   const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState();
   const { user } = props;
+  const [loadClass, setLoadClass] = useState("spinner-border text-primary");
 
   useEffect(() => {
     axios
@@ -20,6 +21,7 @@ const Notifications = (props) => {
       )
       .then((res) => {
         setOrders(res.data.row);
+        setLoadClass("spinner-border text-primary d-none");
       })
       .catch((error) => setErrors(error.message));
   }, []);
@@ -40,6 +42,9 @@ const Notifications = (props) => {
             {user.role === "admin" && <th scope="col">Wycena</th>}
           </tr>
         </thead>
+        <div className={loadClass} role="status">
+          <span class="sr-only"></span>
+        </div>
         <tbody>
           {orders.map((order) => (
             <tr key={order.id}>

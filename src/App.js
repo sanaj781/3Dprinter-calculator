@@ -21,8 +21,17 @@ const App = () => {
   const [user, setUser] = useState();
   const [notifications, setNotifications] = useState(0);
   const [errors, setErrors] = useState();
+  const [loadClass, setLoadClass] = useState(
+    "spinner-border text-primary d-none"
+  );
 
   useEffect(() => {
+    axios
+      .get(API_PATH_NOTIFICATIONS)
+      .then((res) => {
+        setNotifications(res.data.notifications);
+      })
+      .catch((error) => setErrors(error.message));
     try {
       const jwt = localStorage.getItem("jwt");
       const decoded = jwtDecode(jwt);
@@ -30,12 +39,6 @@ const App = () => {
     } catch (ex) {
       return null;
     }
-    axios
-      .get(API_PATH_NOTIFICATIONS)
-      .then((res) => {
-        setNotifications(res.data.notifications);
-      })
-      .catch((error) => setErrors(error.message));
   }, []);
   const handleLogout = () => {
     setUser();
@@ -45,6 +48,7 @@ const App = () => {
   };
   const onSubmit = async (event) => {
     event.preventDefault();
+    setLoadClass("spinner-border text-primary");
     axios({
       method: "POST",
       url: API_PATH_AUTH,
@@ -61,6 +65,7 @@ const App = () => {
           const jwt = localStorage.getItem("jwt");
           const decoded = jwtDecode(jwt);
           setUser({ username: decoded.data.username, role: decoded.data.role });
+          setLoadClass("spinner-border text-primary d-none");
         }
       })
       .catch((error) => setErrors(error.message));
@@ -88,6 +93,9 @@ const App = () => {
               onPasswordChange={(e) => setPassword(e.target.value)}
               onSubmit={onSubmit}
             />
+            <div className={loadClass} role="status">
+              <span class="sr-only"></span>
+            </div>
           </div>
         </div>
         {/* push footer to bottom */}
