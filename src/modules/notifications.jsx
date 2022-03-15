@@ -3,26 +3,33 @@ import axios from "axios";
 import {
   API_PATH_READ_NOTIFICATIONS_ADMIN,
   API_PATH_READ_NOTIFICATIONS_SALES,
+  apiURL,
 } from "../APIs";
 
 const Notifications = (props) => {
-  //   const { user } = props;
   const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState();
   const { user } = props;
   const [loadClass, setLoadClass] = useState("spinner-border text-primary");
 
+  const username = user.username;
+
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
     let isApiSubscribed = true;
-    axios
-      .get(
+    axios({
+      method: "POST",
+      url:
         user.role === "admin"
           ? API_PATH_READ_NOTIFICATIONS_ADMIN
           : API_PATH_READ_NOTIFICATIONS_SALES,
-        { signal }
-      )
+      signal: signal,
+      headers: {
+        "content-type": "application/json",
+      },
+      data: { username },
+    })
       .then((res) => {
         if (isApiSubscribed) {
           setOrders(res.data.row);
@@ -38,8 +45,9 @@ const Notifications = (props) => {
       isApiSubscribed = false;
       controller.abort();
     };
-  }, [user]);
+  }, [username, user]);
   if (errors) console.log(errors);
+  // if (orders.length !== 0) {
   return (
     <React.Fragment>
       <h3 className="text-center">
@@ -70,7 +78,9 @@ const Notifications = (props) => {
               <td>{order.id}</td>
               <td>{order.project_title}</td>
               <td>{order.ordering_person}</td>
-              <td>{order.project_file}</td>
+              <td>
+                <a href={`${apiURL}/${order.project_file}`}>Pobierz</a>
+              </td>
               <td>{order.material}</td>
               <td>{order.color}</td>
               <td>{order.project_description}</td>
@@ -86,6 +96,13 @@ const Notifications = (props) => {
       </table>
     </React.Fragment>
   );
+  // } else {
+  //   return (
+  //     <React.Fragment>
+  //       <h3>Nie masz nowych powiadomien</h3>
+  //     </React.Fragment>
+  //   );
+  // }
 };
 
 export default Notifications;

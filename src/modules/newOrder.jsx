@@ -8,6 +8,7 @@ class NewOrder extends Component {
       projectName: "",
       fullname: this.props.user.username,
       projectFile: "",
+      fileExt: "",
       choosenMaterial: "",
       materialColor: "",
       description: "",
@@ -62,7 +63,35 @@ class NewOrder extends Component {
     }
   };
   handleModalChange = () => {
-    this.setState({ modalClass: "modal" });
+    this.setState({
+      // post: {
+      //   projectName: "",
+      //   projectFile: "",
+      //   choosenMaterial: "",
+      //   materialColor: "",
+      //   description: "",
+      // },
+      modalClass: "modal",
+    });
+    console.log(this.state);
+  };
+  onFileChange = (e) => {
+    let files = e.target.files;
+    const fileName = files[0].name;
+    const ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+    let fileReader = new FileReader();
+
+    fileReader.readAsDataURL(files[0]);
+
+    fileReader.onload = (event) => {
+      this.setState({
+        post: {
+          ...this.state.post,
+          projectFile: event.target.result,
+          fileExt: ext,
+        },
+      });
+    };
   };
   render() {
     return (
@@ -91,6 +120,7 @@ class NewOrder extends Component {
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">Nazwa projektu</label>
             <input
+              value={this.state.post.projectName}
               onChange={(e) =>
                 this.setState({
                   post: { ...this.state.post, projectName: e.target.value },
@@ -107,7 +137,8 @@ class NewOrder extends Component {
             <label htmlFor="exampleFormControlFile1">Plik projektu</label>
             <br />
             <input
-              name="project_file"
+              onChange={this.onFileChange}
+              name="uploadzip"
               type="file"
               className="form-control-file"
               id="exampleFormControlFile1"
@@ -116,6 +147,7 @@ class NewOrder extends Component {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Rodzaj Materialu</label>
             <select
+              value={this.state.post.choosenMaterial}
               onChange={(e) =>
                 this.setState({
                   post: { ...this.state.post, choosenMaterial: e.target.value },
@@ -136,6 +168,7 @@ class NewOrder extends Component {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Color</label>
             <select
+              value={this.state.post.materialColor}
               onChange={(e) =>
                 this.setState({
                   post: { ...this.state.post, materialColor: e.target.value },
@@ -159,6 +192,7 @@ class NewOrder extends Component {
               Krotki opis projektu
             </label>
             <textarea
+              value={this.state.post.description}
               onChange={(e) =>
                 this.setState({
                   post: { ...this.state.post, description: e.target.value },

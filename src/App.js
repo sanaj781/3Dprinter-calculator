@@ -14,7 +14,7 @@ import Login from "./modules/loginPage";
 import Orders from "./modules/roleSales/allOrders";
 import Storage from "./modules/roleSales/storage";
 import Notifications from "./modules/notifications";
-import { API_PATH_AUTH, API_PATH_NOTIFICATIONS } from "./APIs.js";
+import { API_PATH_AUTH } from "./APIs.js";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -27,12 +27,6 @@ const App = () => {
   );
 
   useEffect(() => {
-    axios
-      .get(API_PATH_NOTIFICATIONS)
-      .then((res) => {
-        setNotifications(res.data.notifications);
-      })
-      .catch((error) => setErrors(error.message));
     try {
       const jwt = localStorage.getItem("jwt");
       const decoded = jwtDecode(jwt);
@@ -119,17 +113,16 @@ const App = () => {
                 alt=""
               />
 
-              {user && (
-                <React.Fragment>
-                  <PrinterNavBar user={user} />
-                  <SkanerNavBar />
-                </React.Fragment>
-              )}
+              <React.Fragment>
+                <PrinterNavBar user={user} />
+                <SkanerNavBar />
+              </React.Fragment>
             </div>
             <div className="col-10 content-section p-0 px-5">
               <UserPanel
                 user={user}
                 notifications={notifications}
+                setNotifications={setNotifications}
                 onLogout={handleLogout}
               />
               <div>

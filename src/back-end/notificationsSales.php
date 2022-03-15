@@ -4,7 +4,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
 header("Content-Type: application/json; charset=UTF-8");
 require 'db.php';
-$orders = [];
+$notifications = 0;
 $rest_json = file_get_contents("php://input");
 $_POST = json_decode($rest_json, true);
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
@@ -14,7 +14,7 @@ $resultCheck = mysqli_num_rows($result);
 
 if ($resultCheck > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $orders[] = $row;
+        $notifications++;
     }
 }
-echo json_encode(["row" => $orders,]);
+echo json_encode(["notifications" => $notifications,]);

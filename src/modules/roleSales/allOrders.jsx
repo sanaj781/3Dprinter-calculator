@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { API_PATH_ALL_ORDERS } from "../../APIs";
+import { API_PATH_ALL_ORDERS, API_DOWNLOAD } from "../../APIs";
 
 const Orders = (props) => {
   const { user } = props;
   const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState();
   const [loadClass, setLoadClass] = useState("spinner-border text-primary");
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -30,17 +29,21 @@ const Orders = (props) => {
           }
         }
       })
-      .catch((error) => {
-        signal.aborted
-          ? console.log("successfully aborted")
-          : setErrors(error.message);
-      });
+      .catch(
+        (error) => {
+          signal.aborted
+            ? console.log("successfully aborted")
+            : setErrors(error.message);
+        },
+        [user]
+      );
     return () => {
       isApiSubscribed = false;
       controller.abort();
     };
   }, [user]);
   if (errors) console.log(errors);
+
   return (
     <React.Fragment>
       <h3 className="text-center">
@@ -70,7 +73,16 @@ const Orders = (props) => {
               <td>{order.id}</td>
               <td>{order.project_title}</td>
               <td>{order.ordering_person}</td>
-              <td>{order.project_file}</td>
+              <td>
+                <a
+                  href={`${API_DOWNLOAD}?order=${
+                    order.project_file
+                  }&jwt=${localStorage.getItem("jwt")}
+`}
+                >
+                  Pobierz
+                </a>
+              </td>
               <td>{order.material}</td>
               <td>{order.color}</td>
               <td>{order.project_description}</td>
