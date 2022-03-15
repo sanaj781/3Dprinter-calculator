@@ -144,3 +144,6 @@ tr {
   margin-top: 30px;
   width: 50%;
 }
+.material-description-wrapper:hover .material-description {
+  display: block !important;
+}

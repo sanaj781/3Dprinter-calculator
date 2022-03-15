@@ -14,10 +14,12 @@ class NewOrder extends Component {
     },
     modalClass: "modal",
     modalMessage: "",
+    loadClass: "spinner-border text-primary d-none",
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    this.setState({ loadClass: "spinner-border text-primary " });
     const jwt = localStorage.getItem("jwt");
     const decoded = jwtDecode(jwt);
     if (decoded.data.role === "sales") {
@@ -30,6 +32,8 @@ class NewOrder extends Component {
         data: this.state.post,
       })
         .then((result) => {
+          this.setState({ loadClass: "spinner-border text-primary d-none " });
+
           this.setState({ modalClass: "modal d-flex" });
           if (JSON.stringify(result.data).includes("1"))
             this.setState({
@@ -76,8 +80,13 @@ class NewOrder extends Component {
             </button>
           </div>
         </div>
+        <h3 className="text-center">
+          Nowe Zlecenie wydruku{" "}
+          <div className={this.state.loadClass} role="status">
+            <span className="sr-only"></span>
+          </div>
+        </h3>
 
-        <h3 className="text-center">Nowe Zlecenie wydruku</h3>
         <form>
           <div className="form-group">
             <label htmlFor="exampleFormControlInput1">Nazwa projektu</label>

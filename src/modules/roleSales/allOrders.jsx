@@ -7,26 +7,49 @@ const Orders = (props) => {
   const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState();
   const [loadClass, setLoadClass] = useState("spinner-border text-primary");
+
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    let isApiSubscribed = true;
     axios
-      .get(API_PATH_ALL_ORDERS)
+      .get(API_PATH_ALL_ORDERS, { signal })
       .then((res) => {
-        const userOrders = [];
-        if (user.role === "admin") setOrders(res.data.row);
-        else {
-          for (const order of res.data.row) {
-            if (order.ordering_person === user.username) userOrders.push(order);
+        if (isApiSubscribed) {
+          const userOrders = [];
+          if (user.role === "admin") {
+            setOrders(res.data.row);
+            setLoadClass("spinner-border text-primary d-none");
+          } else {
+            for (const order of res.data.row) {
+              if (order.ordering_person === user.username)
+                userOrders.push(order);
+            }
+            setOrders(userOrders);
+            setLoadClass("spinner-border text-primary d-none");
           }
-          setOrders(userOrders);
-          setLoadClass("spinner-border text-primary d-none");
         }
       })
-      .catch((error) => setErrors(error.message));
-  }, []);
+      .catch((error) => {
+        signal.aborted
+          ? console.log("successfully aborted")
+          : setErrors(error.message);
+      });
+    return () => {
+      isApiSubscribed = false;
+      controller.abort();
+    };
+  }, [user]);
   if (errors) console.log(errors);
   return (
     <React.Fragment>
-      <h3 className="text-center">Historia Zlecen</h3>
+      <h3 className="text-center">
+        Historia Zlecen{" "}
+        <div className={loadClass} role="status">
+          <span className="sr-only"></span>
+        </div>
+      </h3>
+
       <table className="table table-striped ">
         <thead>
           <tr>
@@ -41,9 +64,6 @@ const Orders = (props) => {
           </tr>
         </thead>
 
-        <div className={loadClass} role="status">
-          <span class="sr-only"></span>
-        </div>
         <tbody>
           {orders.map((order) => (
             <tr key={order.id}>

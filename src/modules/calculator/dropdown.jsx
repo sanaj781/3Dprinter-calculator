@@ -15,9 +15,13 @@ const Dropdown = (props) => {
       <ul className="dropdown-menu">
         {materials.map((m) => (
           <li key={m.title}>
-            <a className="dropdown-item" onClick={() => onMaterialChose(m)}>
+            <div
+              className="dropdown-item material-description-wrapper"
+              onClick={() => onMaterialChose(m)}
+            >
               {m.title}
-            </a>
+              {/* <div className="material-description d-none">{m.opis}</div> */}
+            </div>
           </li>
         ))}
       </ul>

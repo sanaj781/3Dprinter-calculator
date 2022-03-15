@@ -1,6 +1,6 @@
 import React from "react";
 import fortusLogo from "../images/Fort450F.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const PrinterNavBar = (props) => {
   const { user } = props;
   if (user.role === "admin") {
@@ -13,23 +13,34 @@ const PrinterNavBar = (props) => {
           <nav className="navbar navbar-dark mb-5">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/calculator">
-                  <div className="nav-link active" aria-current="page">
-                    Kalkulator
-                  </div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/calculator"
+                >
+                  Kalkulator
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/orders">
-                  <div className="nav-link">Zlecenia wydruku</div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/orders"
+                >
+                  Zlecenia wydruku
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/storage">
-                  <div className="nav-link" aria-current="page">
-                    Stan Magazynu 011
-                  </div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/storage"
+                >
+                  Stan Magazynu 011
+                </NavLink>
               </li>
               <li className="nav-item">
                 <div className="nav-link">Formularze</div>
@@ -50,28 +61,44 @@ const PrinterNavBar = (props) => {
           <nav className="navbar navbar-dark mb-5">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/new-order">
-                  <div className="nav-link active" aria-current="page">
-                    Nowe zlecenie wydruku
-                  </div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/new-order"
+                >
+                  Nowe zlecenie wydruku
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/orders">
-                  <div className="nav-link">Status twoich zlecen</div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/orders"
+                >
+                  Status twoich zlecen
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/information-materials">
-                  <div className="nav-link" aria-current="page">
-                    Informajca: Materialy
-                  </div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/information-materials"
+                >
+                  Informajca: Materialy
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/information-printer">
-                  <div className="nav-link">Informajca: Drukarka</div>
-                </Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/information-printer"
+                >
+                  Informajca: Drukarka
+                </NavLink>
               </li>
             </ul>
           </nav>

@@ -6,6 +6,7 @@ import drabpolLogo from "./images/DRABPOL-white2.webp";
 import drabpolLogoBlack from "./images/Drabpol-1600x640.jpeg";
 import PrinterNavBar from "./modules/printerNavbar";
 import SkanerNavBar from "./modules/skanerNavbar";
+import Layout from "./modules/layout";
 import UserPanel from "./modules/userPanel";
 import Calculator from "./modules/calculator/calculator";
 import NewOrder from "./modules/newOrder";
@@ -94,7 +95,7 @@ const App = () => {
               onSubmit={onSubmit}
             />
             <div className={loadClass} role="status">
-              <span class="sr-only"></span>
+              <span className="sr-only"></span>
             </div>
           </div>
         </div>
@@ -137,18 +138,16 @@ const App = () => {
                     exact
                     path="/"
                     element={
-                      <Login
+                      <Layout
                         username={username}
                         password={password}
                         user={user}
-                        onEmailChange={(e) => setUsername(e.target.value)}
-                        onPasswordChange={(e) => setPassword(e.target.value)}
                         onSubmit={onSubmit}
                         onLogout={handleLogout}
-                        notifications={notifications}
                       />
                     }
                   />
+
                   <Route path="/orders" element={<Orders user={user} />} />
                   <Route path="/new-order" element={<NewOrder user={user} />} />
 

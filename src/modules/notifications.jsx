@@ -13,21 +13,42 @@ const Notifications = (props) => {
   const [loadClass, setLoadClass] = useState("spinner-border text-primary");
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    let isApiSubscribed = true;
     axios
       .get(
         user.role === "admin"
           ? API_PATH_READ_NOTIFICATIONS_ADMIN
-          : API_PATH_READ_NOTIFICATIONS_SALES
+          : API_PATH_READ_NOTIFICATIONS_SALES,
+        { signal }
       )
       .then((res) => {
-        setOrders(res.data.row);
-        setLoadClass("spinner-border text-primary d-none");
+        if (isApiSubscribed) {
+          setOrders(res.data.row);
+          setLoadClass("spinner-border text-primary d-none");
+        }
       })
-      .catch((error) => setErrors(error.message));
-  }, []);
+      .catch((error) =>
+        signal.aborted
+          ? console.log("successfully aborted")
+          : setErrors(error.message)
+      );
+    return () => {
+      isApiSubscribed = false;
+      controller.abort();
+    };
+  }, [user]);
+  if (errors) console.log(errors);
   return (
     <React.Fragment>
-      <h3 className="text-center">Nowe Powiadomienia</h3>
+      <h3 className="text-center">
+        Nowe Powiadomienia{" "}
+        <div className={loadClass} role="status">
+          <span className="sr-only"></span>
+        </div>{" "}
+      </h3>
+
       <table className="table table-striped ">
         <thead>
           <tr>
@@ -42,9 +63,7 @@ const Notifications = (props) => {
             {user.role === "admin" && <th scope="col">Wycena</th>}
           </tr>
         </thead>
-        <div className={loadClass} role="status">
-          <span class="sr-only"></span>
-        </div>
+
         <tbody>
           {orders.map((order) => (
             <tr key={order.id}>
